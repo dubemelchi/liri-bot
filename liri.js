@@ -1,15 +1,22 @@
+// here we are telling the app to require the dotenv node package and setting it to config()
 require('dotenv').config();
 
+// here the app must import the node-spotify-api and set it to the Spotify Variable
 var Spotify = require('node-spotify-api');
 
+// importing the whatever is setup in the keys js file and setting to the keys variable
 var keys = require('./keys');
 
+// importing the axios node package and setting it to axios variable
 var axios = require('axios');
 
+// importing the moment package and setting it to moment variable
 var moment = require('moment');
 
+// importing the FS package for reading and writing
 var fs = require('fs');
 
+// here the app will initialize the spofity client using our id and secret
 var spotify = new Spotify(keys.spotify);
 
 var getArtistNames = function(artist) {
