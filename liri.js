@@ -19,26 +19,38 @@ var fs = require('fs');
 // here the app will initialize the spofity client using our id and secret
 var spotify = new Spotify(keys.spotify);
 
+// we want to get the artist name
+// we create a variable to store the name when we get it
+// we create a function with a param of artist.
+// that function will return an object and from that object we want the name.
 var getArtistNames = function(artist) {
   return artist.name;
 };
 
+// we want to run a search
+// we create a search variable ie getMeSpotiy
+// we want to search spotify by song name
+// we set that variable to a function
+// in that function we will add the param of songName which we have not defined yet
 var getMeSpotify = function(songName) {
   if (songName === undefined) {
     songName = "What's my age again";
   }
 
+  // we set spotify to a search and create and object that will return a track by querying by songName entered in getMeSpotify above
   spotify.search(
     {
       type: 'track',
       query: songName
     },
+    // we create a function handle any errors that occurr during the query
     function(err, data) {
       if (err) {
         console.log('Error occurred: ' + err);
         return;
       }
 
+      //
       var songs = data.tracks.items;
 
       for (var i = 0; i < songs.length; i++) {
