@@ -37,22 +37,23 @@ var getMeSpotify = function(songName) {
     songName = "What's my age again";
   }
 
-  // we set spotify to a search and create and object that will return a track by querying by songName entered in getMeSpotify above
+  // we set spotify to a search and create an object that will return a track by querying by songName entered in getMeSpotify above
   spotify.search(
     {
       type: 'track',
       query: songName
     },
-    // we create a function handle any errors that occurr during the query
+    // we create a function to handle any errors that occurr during the query
     function(err, data) {
       if (err) {
         console.log('Error occurred: ' + err);
         return;
       }
 
-      //
+      // setting individual track song names from data-tracks-items to the songs variable
       var songs = data.tracks.items;
 
+      // for loop to loop through the results to get artist, song name, preview, album and console logging results in node terminal/bash
       for (var i = 0; i < songs.length; i++) {
         console.log(i);
         console.log('artist(s): ' + songs[i].artists.map(getArtistNames));
@@ -65,25 +66,35 @@ var getMeSpotify = function(songName) {
   );
 };
 
+// here we are directing the app to use axios to query the bands in town api for concert information by band name
+// 1st we create a function with a param of artist and set it variable getMyBands
+// in that function we query the bands in town url, by artist, and set to a variable 'queryUrl'
+// the url includes the artist param and the coding bootcamp api key
 var getMyBands = function(artist) {
   var queryURL =
     'https://rest.bandsintown.com/artists/' +
     artist +
     '/events?app_id=codingbootcamp';
 
+  // we use axios to get a response from the url.
+  // we set that response to a variable jsonData
   axios.get(queryURL).then(function(response) {
     var jsonData = response.data;
 
+    // here, if no results were found by axios, throw message stating that, including the artist name. Then return
     if (!jsonData.length) {
       console.log('No results found for ' + artist);
       return;
     }
 
+    // this is a heading that will be displayed in the node bash above the results from the api
     console.log('Upcoming concerts for ' + artist + ':');
 
+    // 'for loop' to loop thru the api results
     for (var i = 0; i < jsonData.length; i++) {
       var show = jsonData[i];
 
+      // here the app will log the event details in the console/terminal/bash
       console.log(
         show.venue.city +
           ',' +
@@ -97,6 +108,7 @@ var getMyBands = function(artist) {
   });
 };
 
+// here the app is doing the same as above but for movies instead
 var getMeMovie = function(movieName) {
   if (movieName === undefined) {
     movieName = 'Mr Nobody';
